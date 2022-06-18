@@ -37,10 +37,13 @@ export default function OldBoardWrite(props: IOldBoardWrite) {
             remarks: data.remarks,
             contents: data.contents,
             price: data.price,
+            tags: data.tags,
+            images: data.images,
+            createdAt: data.createdAt,
           },
         },
       });
-      router.push(`/oldboard/${result.data.createUseditem._id}`);
+      router.push(`/oldboards/boards/${result.data.createUseditem._id}`);
     } catch (error) {
       alert("죄송합니다. 다시 한 번 시도해주세요!");
     }

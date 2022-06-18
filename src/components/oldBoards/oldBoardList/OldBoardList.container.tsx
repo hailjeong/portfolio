@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import OldBoardListUI from "./OldBoardList.presenter";
-import { FETCH_BOARDS_COUNT, FETCH_USEDITEMS } from "./OldBoardList.queries";
+import { FETCH_USEDITEMS } from "./OldBoardList.queries";
 
 export default function OldBoardList() {
   const router = useRouter();
@@ -14,11 +14,9 @@ export default function OldBoardList() {
   });
 
   const { data, refetch } = useQuery(FETCH_USEDITEMS);
-  const { data: dataCount, refetch: refetchCount } =
-    useQuery(FETCH_BOARDS_COUNT);
 
   const onClickMoveDetail = (event) => {
-    router.push(`/oldboards/${event.currentTarget.id}`);
+    router.push(`/oldboards/boards/${event.currentTarget.id}`);
   };
 
   const onClickWriteNew = () => {
@@ -39,8 +37,6 @@ export default function OldBoardList() {
       onClickWriteNew={onClickWriteNew}
       onChangeWord={onChangeWord}
       keyword={keyword}
-      dataCount={dataCount?.fetchBoardsCount}
-      refetchCount={refetchCount}
     />
   );
 }

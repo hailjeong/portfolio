@@ -30,8 +30,16 @@ export const SearchWrapper = styled.div`
   width: 100%;
   padding-bottom: 30px;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
+export const SellingWrapper = styled.div`
+  display: flex;
+`;
+export const Selling = styled.div``;
+export const Selled = styled.div``;
 export const Search = styled.div``;
+export const SearchDate = styled.div``;
 export const ListTitleWrapper = styled.div`
   width: 100%;
   height: 50px;

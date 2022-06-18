@@ -5,9 +5,15 @@ export const CREATE_USEDITEM = gql`
     createUseditem(createUseditemInput: $createUseditemInput) {
       _id
       name
-      contents
-      images
       remarks
+      contents
+      price
+      tags
+      images
+      seller {
+        name
+      }
+      createdAt
     }
   }
 `;

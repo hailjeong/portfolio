@@ -6,6 +6,9 @@ export const FETCH_USEDITEMS = gql`
       _id
       name
       contents
+      seller {
+        name
+      }
       createdAt
     }
   }

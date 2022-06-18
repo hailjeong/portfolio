@@ -1,5 +1,4 @@
 import { getDate } from "../../commons/libraries/utils";
-import OldBoardPagination from "../../oldBoardPagination/OldBoardPagination.container";
 import Search from "../../search/Search.container";
 import * as S from "./OldBoardList.styles";
 
@@ -28,13 +27,17 @@ export default function OldBoardListUI(props: IOldBoardListUI) {
       </S.BoxWrapper>
 
       <S.SearchWrapper>
-        <Search
-          refetch={props.refetch}
-          refetchCount={props.refetchCount}
-          onChangeWord={props.onChangeWord}
-        />
-        <>날짜 라이브러리</>
-        <S.Search>검색하기</S.Search>
+        <S.SellingWrapper>
+          <S.Selling>판매중인 상품 / </S.Selling>
+          <S.Selled> 판매완료된 상품</S.Selled>
+        </S.SellingWrapper>
+        <S.SearchDate>
+          <Search
+            refetch={props.refetch}
+            refetchCount={props.refetchCount}
+            onChangeWord={props.onChangeWord}
+          />
+        </S.SearchDate>
       </S.SearchWrapper>
 
       <S.ListTitleWrapper>
@@ -50,16 +53,12 @@ export default function OldBoardListUI(props: IOldBoardListUI) {
           <S.ListTitle onClick={props.onClickMoveDetail} id={el._id}>
             {el.name}
           </S.ListTitle>
-          <S.ListWriter>{el.writer}</S.ListWriter>
+          <S.ListWriter>{el.seller.name}</S.ListWriter>
           <S.ListDate>{getDate(el.createdAt)}</S.ListDate>
         </S.ListWrapper>
       ))}
 
       <S.WrapperFooter>
-        <OldBoardPagination
-          refetch={props.refetch}
-          count={props.refetchCount}
-        />
         <S.SubmitButton>게시물 등록하기</S.SubmitButton>
       </S.WrapperFooter>
     </S.Wrapper>
