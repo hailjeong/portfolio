@@ -1,9 +1,13 @@
 import { getDate } from "../../commons/libraries/utils";
+import MapPage from "../../map/Map.presenter";
 import * as S from "./OldBoardDetail.styles";
+import Dompurify from "dompurify";
 
 interface IOldBoardDetailUI {
   data?: any;
   onClickMoveList: () => void;
+  onClickEdit: () => void;
+  onClickDelete: () => void;
 }
 
 export default function OldBoardDetailUI(props: IOldBoardDetailUI) {
@@ -31,7 +35,13 @@ export default function OldBoardDetailUI(props: IOldBoardDetailUI) {
         </S.ImgWrapper>
 
         <S.ContentsWrapper>
-          <S.Contents>상품설명내용이 들어갈 자리</S.Contents>
+          {typeof window !== "undefined" && (
+            <S.Contents
+              dangerouslySetInnerHTML={{
+                __html: Dompurify.sanitize(props.data?.fetchUseditem.contents),
+              }}
+            ></S.Contents>
+          )}
         </S.ContentsWrapper>
 
         <S.TagWrapper>
@@ -39,13 +49,15 @@ export default function OldBoardDetailUI(props: IOldBoardDetailUI) {
         </S.TagWrapper>
 
         <S.MapWrapper>
-          <S.Map></S.Map>
+          <MapPage data={props.data} />
         </S.MapWrapper>
       </S.Body>
 
       <S.Options>
         <S.ListButton onClick={props.onClickMoveList}>목록으로</S.ListButton>
+        <S.EditButton onClick={props.onClickEdit}>수정하기</S.EditButton>
         <S.BuyButton>구매하기</S.BuyButton>
+        <S.DeleteButton onClick={props.onClickDelete}>삭제하기</S.DeleteButton>
       </S.Options>
     </S.Wrapper>
   );

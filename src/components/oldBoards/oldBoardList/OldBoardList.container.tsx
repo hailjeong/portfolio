@@ -13,7 +13,26 @@ export default function OldBoardList() {
     mode: "onChange",
   });
 
-  const { data, refetch } = useQuery(FETCH_USEDITEMS);
+  const { data, refetch, fetchMore } = useQuery(FETCH_USEDITEMS, {
+    variables: { useditemId: router.query.id },
+  });
+  const loadFunc = () => {
+    if (!data) return;
+    fetchMore({
+      variables: { page: Math.ceil(data?.fetchUseditems.length / 10) + 1 },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult.fetchUseditems)
+          return { fetchUseditems: [...prev.fetchUseditems] };
+
+        return {
+          fetchUseditems: [
+            ...prev.fetchUseditems,
+            ...fetchMoreResult.fetchUseditems,
+          ],
+        };
+      },
+    });
+  };
 
   const onClickMoveDetail = (event) => {
     router.push(`/oldboards/boards/${event.currentTarget.id}`);
@@ -37,6 +56,7 @@ export default function OldBoardList() {
       onClickWriteNew={onClickWriteNew}
       onChangeWord={onChangeWord}
       keyword={keyword}
+      loadFunc={loadFunc}
     />
   );
 }

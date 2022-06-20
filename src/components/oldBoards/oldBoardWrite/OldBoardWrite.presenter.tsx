@@ -1,6 +1,12 @@
 import Button02 from "../../commons/button/02";
 import Input02 from "../../commons/input/02";
+import MapPage from "../../map/Map.presenter";
+import OldBoardUploads from "../../oldBoardUploads/OldBoardUploads.container";
 import * as S from "./OldBoardWrite.styles";
+import { v4 as uuidv4 } from "uuid";
+// import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
 
 interface IOldBoardWriteUI {
   isEdit: boolean;
@@ -9,11 +15,21 @@ interface IOldBoardWriteUI {
   handleSubmit: any;
   formState: any;
   onClickSubmit: (data) => void;
+  onChangeContents: (value) => void;
+  onClickEdit: (data) => void;
+  onChangeImgUrls: (fileUrl: string, index: number) => void;
+  imgUrls: string[];
 }
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 export default function OldBoardWriteUI(props: IOldBoardWriteUI) {
   return (
-    <S.Wrapper onSubmit={props.handleSubmit(props.onClickSubmit)}>
+    <S.Wrapper
+      onSubmit={props.handleSubmit(
+        props.isEdit ? props.onClickEdit : props.onClickSubmit
+      )}
+    >
       <S.Title>
         <S.TitleName>
           {props.isEdit ? "상품 수정하기 페이지" : "상품 등록하기 페이지"}
@@ -43,11 +59,9 @@ export default function OldBoardWriteUI(props: IOldBoardWriteUI) {
 
       <S.InputsWrapper>
         <S.Label>상품설명</S.Label>
-        <Input02
-          type="text"
-          placeholder="상품을 설명해주세요."
-          register={props.register("contents")}
-          defaultvalue={props.itemdata && props.itemdata.fetchUseditem.contents}
+        <ReactQuill
+          onChange={props.onChangeContents}
+          // defaultvalue={props.itemdata && props.itemdata.fetchUseditem.contents}
         />
         <S.Error>{props.formState.errors.contents?.message}</S.Error>
       </S.InputsWrapper>
@@ -71,7 +85,7 @@ export default function OldBoardWriteUI(props: IOldBoardWriteUI) {
       <S.MapOption>
         <S.InputsWrapper>
           <S.Label>거래위치</S.Label>
-          <S.Map></S.Map>
+          <MapPage />
         </S.InputsWrapper>
         <S.InputsWrapper>
           <S.Label>GPS</S.Label>
@@ -88,8 +102,14 @@ export default function OldBoardWriteUI(props: IOldBoardWriteUI) {
 
       <S.InputsWrapper>
         <S.Label>사진 첨부</S.Label>
-        <S.Img></S.Img>
-        <S.Img></S.Img>
+        {props.imgUrls.map((el, index) => (
+          <OldBoardUploads
+            key={uuidv4()}
+            index={index}
+            fileUrl={el}
+            onChangeFileUrls={props.onChangeImgUrls}
+          />
+        ))}
       </S.InputsWrapper>
 
       <S.Options>
@@ -101,7 +121,10 @@ export default function OldBoardWriteUI(props: IOldBoardWriteUI) {
       </S.Options>
 
       <S.SubmitButton>
-        <Button02 isActive={props.formState.isValid} title="등록하기" />
+        <Button02
+          isActive={props.formState.isValid}
+          title={props.isEdit ? "수정하기" : "등록하기"}
+        />
       </S.SubmitButton>
     </S.Wrapper>
   );

@@ -119,7 +119,7 @@ export default function BoardWrite(props: IBoardWrite) {
     const defaultFiles = JSON.stringify(props.BoardData.fetchBoard.images);
     const isChangedFiles = currentFiles !== defaultFiles;
 
-    if (!inputs.title && !inputs.contents && inputs.youtubeUrl) {
+    if (!inputs.title && !inputs.contents && !inputs.youtubeUrl) {
       alert("수정한 내용이 없습니다.");
       return;
     }

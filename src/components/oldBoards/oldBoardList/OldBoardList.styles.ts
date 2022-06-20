@@ -62,6 +62,11 @@ export const ListTitleWriter = styled.div`
 export const ListTitleDate = styled.div`
   width: 10%;
 `;
+export const InfiniteScroll = styled.div`
+  width: 100%;
+  height: 1000px;
+  overflow: auto;
+`;
 export const ListWrapper = styled.div`
   display: flex;
   width: 100%;

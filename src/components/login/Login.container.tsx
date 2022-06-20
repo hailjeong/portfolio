@@ -69,6 +69,9 @@ export default function Login() {
     }
   };
 
+  const onClickSignup = () => {
+    router.push(`/boards/signup`);
+  };
   return (
     <LoginUI
       onClickLoginButton={onClickLoginButton}
@@ -76,6 +79,7 @@ export default function Login() {
       emailError={emailError}
       passwordError={passwordError}
       isActive={isActive}
+      onClickSignup={onClickSignup}
     />
   );
 }

@@ -35,6 +35,7 @@ export const ImgWrapper = styled.div`
 export const Img = styled.div``;
 export const ContentsWrapper = styled.div`
   padding-bottom: 30px;
+  text-align: center;
 `;
 export const Contents = styled.div``;
 export const TagWrapper = styled.div`
@@ -65,7 +66,31 @@ export const ListButton = styled.button`
   }
   cursor: pointer;
 `;
+export const EditButton = styled.button`
+  width: 150px;
+  height: 50px;
+  background-color: white;
+  border-radius: 24px;
+  :hover {
+    background-color: black;
+    color: white;
+    transition-duration: 2s;
+  }
+  cursor: pointer;
+`;
 export const BuyButton = styled.button`
+  width: 150px;
+  height: 50px;
+  background-color: white;
+  border-radius: 24px;
+  :hover {
+    background-color: black;
+    color: white;
+    transition-duration: 2s;
+  }
+  cursor: pointer;
+`;
+export const DeleteButton = styled.button`
   width: 150px;
   height: 50px;
   background-color: white;

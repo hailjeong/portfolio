@@ -6,6 +6,7 @@ interface ILoginUI {
   onChangeInputs: (event) => void;
   onClickLoginButton: () => void;
   isActive: boolean;
+  onClickSignup: () => void;
 }
 
 export default function LoginUI(props: ILoginUI) {
@@ -44,7 +45,7 @@ export default function LoginUI(props: ILoginUI) {
       <S.Options>
         <S.FindEmail>이메일 찾기</S.FindEmail>
         <S.FindPassword>비밀번호 찾기</S.FindPassword>
-        <S.SignUp>회원가입</S.SignUp>
+        <S.SignUp onClick={props.onClickSignup}>회원가입</S.SignUp>
       </S.Options>
     </S.Wrapper>
   );

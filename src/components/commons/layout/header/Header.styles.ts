@@ -47,3 +47,22 @@ export const SignUp = styled.button`
     transition: 2s;
   }
 `;
+export const Logout = styled.button`
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  margin-right: 40px;
+  background-color: white;
+  border-color: white;
+  border-radius: 15px;
+  :hover {
+    background-color: yellow;
+    transition: 2s;
+  }
+`;
+export const LoginUser = styled.div`
+  font-size: 20px;
+`;
+export const ProfileIcon = styled.img`
+  cursor: pointer;
+`;
