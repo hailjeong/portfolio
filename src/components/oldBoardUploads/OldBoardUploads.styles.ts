@@ -14,6 +14,7 @@ export const UploadButton = styled.div`
   outline: none;
   border: none;
   cursor: pointer;
+  text-align: center;
 `;
 export const UploadFile = styled.input`
   display: none;

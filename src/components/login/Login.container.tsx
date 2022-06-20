@@ -59,9 +59,9 @@ export default function Login() {
         },
       });
       const accessToken = result.data.loginUser.accessToken;
-      console.log(accessToken);
+      // console.log(accessToken);
       setAccessToken(accessToken);
-      localStorage.setItem("accessToken", accessToken);
+      // localStorage.setItem("accessToken", accessToken);
       alert("로그인에 성공하셨습니다!!");
       router.push(`/boards`);
     } catch (error) {

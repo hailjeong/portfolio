@@ -5,6 +5,7 @@ interface IHeaderUIProps {
   onClickLoginButton: () => void;
   onClickSignUpButton: () => void;
   data?: any;
+  onClickLogout: () => void;
 }
 
 export default function HeaderUI(props: IHeaderUIProps) {
@@ -20,7 +21,7 @@ export default function HeaderUI(props: IHeaderUIProps) {
             <S.LoginUser>
               {props.data?.fetchUserLoggedIn.name}님 안녕하세요^^
             </S.LoginUser>
-            <S.Logout>로그아웃</S.Logout>
+            <S.Logout onClick={props.onClickLogout}>로그아웃</S.Logout>
           </S.Buttons>
         ) : (
           <S.Buttons>

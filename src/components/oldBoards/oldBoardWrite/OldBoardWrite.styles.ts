@@ -5,8 +5,6 @@ export const Wrapper = styled.form`
   padding-left: 100px;
   padding-top: 100px;
   padding-right: 100px;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   border: 1px solid #999999;

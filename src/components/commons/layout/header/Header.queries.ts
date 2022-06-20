@@ -9,3 +9,9 @@ export const FETCH_USER_LOGGEDIN = gql`
     }
   }
 `;
+
+export const LOGOUTUSER = gql`
+  mutation {
+    logoutUser
+  }
+`;

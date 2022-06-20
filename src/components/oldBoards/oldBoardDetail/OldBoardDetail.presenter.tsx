@@ -31,7 +31,11 @@ export default function OldBoardDetailUI(props: IOldBoardDetailUI) {
         </S.ItemDetail>
 
         <S.ImgWrapper>
-          <S.Img></S.Img>
+          {props.data?.fetchUseditem.images
+            ?.filter((el: string) => el)
+            .map((el: string) => (
+              <S.Img key={el} src={`https://storage.googleapis.com/${el}`} />
+            ))}
         </S.ImgWrapper>
 
         <S.ContentsWrapper>

@@ -21,18 +21,26 @@ export const Body = styled.div`
   padding-top: 20px;
 `;
 export const ItemDetail = styled.div`
+  padding-bottom: 10px;
+`;
+export const RemarksWrapper = styled.div`
+  padding-bottom: 10px;
+`;
+export const Title = styled.div`
   padding-bottom: 20px;
 `;
-export const RemarksWrapper = styled.div``;
-export const Title = styled.div``;
-export const Price = styled.div``;
+export const Price = styled.div`
+  padding-bottom: 20px;
+`;
 export const ImgWrapper = styled.div`
   width: 100px;
   height: 100px;
-  background-color: gray;
   padding-bottom: 30px;
 `;
-export const Img = styled.div``;
+export const Img = styled.img`
+  width: 100px;
+  height: 100px;
+`;
 export const ContentsWrapper = styled.div`
   padding-bottom: 30px;
   text-align: center;
