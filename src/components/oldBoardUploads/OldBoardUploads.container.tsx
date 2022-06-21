@@ -7,7 +7,6 @@ import { checkValidationImage } from "./OldBoardUploads.validation";
 interface IUploads {
   index: number;
   fileUrl: string;
-  defaultFileUrl?: string;
   onChangeFileUrls: (fileUrl: string, index: number) => void;
 }
 
@@ -31,7 +30,6 @@ export default function OldBoardUploads(props: IUploads) {
     <OldBoardUploadsUI
       fileRef={fileRef}
       fileUrl={props.fileUrl}
-      defaultFileUrl={props.defaultFileUrl}
       onClickUpload={onClickUpload}
       onChangeFile={onChangeFile}
     />

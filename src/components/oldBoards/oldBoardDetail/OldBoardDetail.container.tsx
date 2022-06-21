@@ -9,14 +9,17 @@ export default function OldBoardDetail() {
   const { data } = useQuery(FETCH_USEDITEM, {
     variables: { useditemId: router.query.id },
   });
+
   const [deleteUseditem] = useMutation(DELETE_USEDITEM);
 
   const onClickMoveList = () => {
     router.push(`/oldboards`);
   };
+
   const onClickEdit = () => {
     router.push(`/oldboards/boards/${router.query.id}/edit`);
   };
+
   const onClickDelete = async () => {
     try {
       await deleteUseditem({

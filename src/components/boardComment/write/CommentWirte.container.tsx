@@ -6,59 +6,58 @@ import CommentWirteUI from "./CommentWirte.presenter";
 import { CREATE_BOARD_COMMENT } from "./CommentWirte.queries";
 
 export default function CommentWirte() {
-  const router = useRouter()
-  
-  const [rating, setRating] = useState(0)
+  const router = useRouter();
+
+  const [rating, setRating] = useState(0);
   const [inputs, setInputs] = useState({
     writer: "",
     password: "",
     contents: "",
-  })
+  });
 
-  const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT)
+  const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
 
-  
-  const onChangeInputs = (event:any) => {
+  const onChangeInputs = (event: any) => {
     setInputs({
       ...inputs,
-      [event.target.id]: event.target.value
-    })
-  }
+      [event.target.id]: event.target.value,
+    });
+  };
   const onClickRate = (event) => {
-    setRating(event)
-  }
-  const onClickSubmit = async() => {
-  
+    setRating(event);
+  };
+  const onClickSubmit = async () => {
     await createBoardComment({
-      variables:{
-        createBoardCommentInput:{
+      variables: {
+        createBoardCommentInput: {
           ...inputs,
-          rating
+          rating,
         },
-        boardId: router.query.id
+        boardId: router.query.id,
       },
-      refetchQueries:[
+      refetchQueries: [
         {
           query: FETCH_BOARD_COMMENTS,
-          variables: { boardId: router.query.id} 
-        }
-      ]
-    })
+          variables: { boardId: router.query.id },
+        },
+      ],
+    });
     setInputs({
       writer: "",
       password: "",
       contents: "",
-    })
-    setRating(0)
-  }
+    });
+    setRating(0);
+  };
 
-
-  return <CommentWirteUI
-  onChangeInputs={onChangeInputs}
-  onClickRate={onClickRate}
-  onClickSubmit={onClickSubmit}
-  contents={inputs.contents}
-  inputs={inputs}
-  setRating={rating}
-  />
+  return (
+    <CommentWirteUI
+      onChangeInputs={onChangeInputs}
+      onClickRate={onClickRate}
+      onClickSubmit={onClickSubmit}
+      contents={inputs.contents}
+      inputs={inputs}
+      setRating={rating}
+    />
+  );
 }

@@ -24,6 +24,7 @@ interface IOldBoardWriteUI {
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 export default function OldBoardWriteUI(props: IOldBoardWriteUI) {
+  console.log(props.itemdata);
   return (
     <S.Wrapper
       onSubmit={props.handleSubmit(
@@ -41,7 +42,7 @@ export default function OldBoardWriteUI(props: IOldBoardWriteUI) {
           type="text"
           placeholder="상품명을 작성해주세요."
           register={props.register("name")}
-          defaultvalue={props.itemdata && props.itemdata.fetchUseditem.name}
+          defaultValue={props.itemdata?.fetchUseditem.name}
         />
         <S.Error>{props.formState.errors.name?.message}</S.Error>
       </S.InputsWrapper>
@@ -52,7 +53,7 @@ export default function OldBoardWriteUI(props: IOldBoardWriteUI) {
           type="text"
           placeholder="상품평을 작성해주세요."
           register={props.register("remarks")}
-          defaultvalue={props.itemdata && props.itemdata.fetchUseditem.remarks}
+          defaultValue={props.itemdata?.fetchUseditem.remarks}
         />
         <S.Error>{props.formState.errors.remarks?.message}</S.Error>
       </S.InputsWrapper>
@@ -61,7 +62,7 @@ export default function OldBoardWriteUI(props: IOldBoardWriteUI) {
         <S.Label>상품설명</S.Label>
         <ReactQuill
           onChange={props.onChangeContents}
-          // defaultvalue={props.itemdata && props.itemdata.fetchUseditem.contents}
+          defaultValue={props.itemdata && props.itemdata.fetchUseditem.contents}
         />
         <S.Error>{props.formState.errors.contents?.message}</S.Error>
       </S.InputsWrapper>
@@ -72,14 +73,19 @@ export default function OldBoardWriteUI(props: IOldBoardWriteUI) {
           type="text"
           placeholder="판매 가격을 입력해주세요."
           register={props.register("price")}
-          defaultvalue={props.itemdata && props.itemdata.fetchUseditem.price}
+          defaultValue={props.itemdata?.fetchUseditem.price}
         />
         <S.Error>{props.formState.errors.price?.message}</S.Error>
       </S.InputsWrapper>
 
       <S.InputsWrapper>
         <S.Label>태그입력</S.Label>
-        <Input02 type="text" placeholder="#태그 #태그 #태그" />
+        <Input02
+          type="text"
+          placeholder="#태그 #태그 #태그"
+          register={props.register("tags")}
+          defaultValue={props.itemdata?.fetchUseditem.tags}
+        />
       </S.InputsWrapper>
 
       <S.MapOption>

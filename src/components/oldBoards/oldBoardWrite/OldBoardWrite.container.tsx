@@ -6,7 +6,7 @@ import OldBoardWriteUI from "./OldBoardWrite.presenter";
 import { CREATE_USEDITEM, UPDATE_USEDITEM } from "./OldBoardWrite.queries";
 import * as yup from "yup";
 import { Modal } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface IOldBoardWrite {
   isEdit: boolean;
@@ -37,6 +37,7 @@ export default function OldBoardWrite(props: IOldBoardWrite) {
     newImgUrls[index] = fileUrl;
     setImgUrls(newImgUrls);
   };
+
   const onChangeContents = (value: string) => {
     console.log(value);
 
@@ -74,21 +75,19 @@ export default function OldBoardWrite(props: IOldBoardWrite) {
   };
   const onClickEdit = async (data) => {
     // try {
-    if (data.name) data.updateUseditemInput.name = data.name;
-    if (data.remarks) data.updateUseditemInput.remarks = data.remarks;
-    if (data.contents) data.updateUseditemInput.contents = data.contents;
-    if (data.price) data.updateUseditemInput.price = data.price;
-    if (data.tags) data.updateUseditemInput.tags = data.tags;
+    const currentFiles = JSON.stringify(imgUrls);
+    const defaultFiles = JSON.stringify(props.itemdata.fetchUseditem.images);
+    const isChangedFiles = currentFiles !== defaultFiles;
+
+    const updateUseditemInput: any = {};
+    if (isChangedFiles) updateUseditemInput.images = imgUrls;
 
     await updateUseditem({
       variables: {
         useditemId: router.query.id,
         updateUseditemInput: {
-          name: data.name,
-          remarks: data.remarks,
-          contents: data.contents,
-          price: data.price,
-          tags: data.tags,
+          ...data,
+          images: imgUrls,
         },
       },
     });
@@ -98,6 +97,12 @@ export default function OldBoardWrite(props: IOldBoardWrite) {
     //   Modal.error({ content: "게시물 수정에 실패했습니다!" });
     // }
   };
+
+  useEffect(() => {
+    if (props.itemdata?.fetchUseditem.images?.length) {
+      setImgUrls([...props.itemdata?.fetchUseditem.images]);
+    }
+  }, [props.itemdata]);
 
   return (
     <OldBoardWriteUI

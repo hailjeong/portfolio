@@ -4,7 +4,6 @@ import * as S from "./OldBoardUploads.styles";
 interface IUploadsUI {
   fileRef: RefObject<HTMLInputElement>;
   fileUrl: string;
-  defaultFileUrl?: string;
   onClickUpload: () => void;
   onChangeFile: (event: ChangeEvent<HTMLInputElement>) => void;
 }

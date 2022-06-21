@@ -26,11 +26,11 @@ const FETCH_USEDITEM = gql`
 export default function EditPage() {
   const router = useRouter();
 
-  const { data } = useQuery(FETCH_USEDITEM, {
+  const { data, loading } = useQuery(FETCH_USEDITEM, {
     variables: {
       useditemId: router.query.id,
     },
   });
 
-  return <OldBoardWrite isEdit={true} itemdata={data} />;
+  return loading ? <></> : <OldBoardWrite isEdit={true} itemdata={data} />;
 }
