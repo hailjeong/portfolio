@@ -19,6 +19,8 @@ interface IOldBoardWriteUI {
   onClickEdit: (data) => void;
   onChangeImgUrls: (fileUrl: string, index: number) => void;
   imgUrls: string[];
+  setAddress: any;
+  address: any;
 }
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -91,17 +93,17 @@ export default function OldBoardWriteUI(props: IOldBoardWriteUI) {
       <S.MapOption>
         <S.InputsWrapper>
           <S.Label>거래위치</S.Label>
-          <MapPage />
+          <MapPage setAddress={props.setAddress} />
         </S.InputsWrapper>
         <S.InputsWrapper>
           <S.Label>GPS</S.Label>
           <S.Buttons>
-            <button>위도(LAT)</button>
-            <button>경도(LNG)</button>
+            <div>위도(LAT)</div>
+            <div>경도(LNG)</div>
           </S.Buttons>
 
           <S.Label>주소</S.Label>
-          <Input02 type="text" />
+          <Input02 type="text" defaultValue={props.address} />
           <Input02 type="text" />
         </S.InputsWrapper>
       </S.MapOption>

@@ -18,6 +18,8 @@ export const FETCH_USEDITEM = gql`
         lng
       }
       seller {
+        _id
+        email
         name
       }
       createdAt
@@ -28,5 +30,11 @@ export const FETCH_USEDITEM = gql`
 export const DELETE_USEDITEM = gql`
   mutation deleteUseditem($useditemId: ID!) {
     deleteUseditem(useditemId: $useditemId)
+  }
+`;
+
+export const TOGGLE_USED_ITEM = gql`
+  mutation toggleUseditemPick($useditemId: ID!) {
+    toggleUseditemPick(useditemId: $useditemId)
   }
 `;

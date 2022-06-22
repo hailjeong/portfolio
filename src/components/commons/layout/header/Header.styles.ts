@@ -47,6 +47,7 @@ export const SignUp = styled.button`
     transition: 2s;
   }
 `;
+export const LogoutWrapper = styled.div``;
 export const Logout = styled.button`
   cursor: pointer;
   width: 150px;

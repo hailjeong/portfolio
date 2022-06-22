@@ -8,17 +8,24 @@ interface IOldBoardDetailUI {
   onClickMoveList: () => void;
   onClickEdit: () => void;
   onClickDelete: () => void;
+  onClickPick: () => void;
 }
 
 export default function OldBoardDetailUI(props: IOldBoardDetailUI) {
   return (
     <S.Wrapper>
       <S.ProfileWrapper>
-        <S.Profile src="/images/Vector.png" />
-        <S.WriterWrapper>
-          <S.Writer>{props.data?.fetchUseditem.seller.name}</S.Writer>
-          <S.Date>{getDate(props.data?.fetchUseditem.createdAt)}</S.Date>
-        </S.WriterWrapper>
+        <S.HeaderWrapper>
+          <S.Profile src="/images/Vector.png" />
+          <S.WriterWrapper>
+            <S.Writer>{props.data?.fetchUseditem.seller.name}</S.Writer>
+            <S.Date>{getDate(props.data?.fetchUseditem.createdAt)}</S.Date>
+          </S.WriterWrapper>
+        </S.HeaderWrapper>
+        <S.Icons>
+          <S.HeartTwoToneIcon onClick={props.onClickPick} />
+          <S.PickCount>{props.data?.fetchUseditem.pickedCount}</S.PickCount>
+        </S.Icons>
       </S.ProfileWrapper>
 
       <S.Body>

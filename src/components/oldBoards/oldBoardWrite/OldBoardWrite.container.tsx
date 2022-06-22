@@ -23,6 +23,7 @@ const schema = yup.object({
 export default function OldBoardWrite(props: IOldBoardWrite) {
   const router = useRouter();
 
+  const [address, setAddress] = useState("");
   const [imgUrls, setImgUrls] = useState(["", "", ""]);
   const [createUseditem] = useMutation(CREATE_USEDITEM);
   const [updateUseditem] = useMutation(UPDATE_USEDITEM);
@@ -39,13 +40,12 @@ export default function OldBoardWrite(props: IOldBoardWrite) {
   };
 
   const onChangeContents = (value: string) => {
-    console.log(value);
-
     // register로 등록하지 않고, 강제로 값을 넣어주는 기능!
     setValue("contents", value === "<p><br></p>" ? "" : value);
 
     // onChange 됐다고 react-hook-form에 알려주는 기능!
     trigger("contents");
+    console.log(address);
   };
 
   const onClickSubmit = async (data) => {
@@ -60,8 +60,7 @@ export default function OldBoardWrite(props: IOldBoardWrite) {
             tags: data.tags,
             images: imgUrls,
             useditemAddress: {
-              // lat: data.useditemAddress.lat,
-              // lng: data.useditemAddress.lng,
+              address,
             },
             createdAt: data.createdAt,
           },
@@ -116,6 +115,8 @@ export default function OldBoardWrite(props: IOldBoardWrite) {
       onClickEdit={onClickEdit}
       onChangeImgUrls={onChangeImgUrls}
       imgUrls={imgUrls}
+      setAddress={setAddress}
+      address={address}
     />
   );
 }

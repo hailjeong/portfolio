@@ -1,3 +1,4 @@
+import Charge from "../../charge/Charge.container";
 import * as S from "./Header.styles";
 
 interface IHeaderUIProps {
@@ -21,7 +22,10 @@ export default function HeaderUI(props: IHeaderUIProps) {
             <S.LoginUser>
               {props.data?.fetchUserLoggedIn.name}님 안녕하세요^^
             </S.LoginUser>
-            <S.Logout onClick={props.onClickLogout}>로그아웃</S.Logout>
+            <S.LogoutWrapper>
+              <Charge />
+              <S.Logout onClick={props.onClickLogout}>로그아웃</S.Logout>
+            </S.LogoutWrapper>
           </S.Buttons>
         ) : (
           <S.Buttons>

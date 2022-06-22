@@ -6,10 +6,10 @@ import OldBoardDetail from "../../../../src/components/oldBoards/oldBoardDetail/
 export default function OldBoardDetailPage() {
   // useAuth();
   return (
-    <div>
+    <>
       <OldBoardDetail />
       <OldBoardCommentWrite />
       <OldBoardCommentList />
-    </div>
+    </>
   );
 }

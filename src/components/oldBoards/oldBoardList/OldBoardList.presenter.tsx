@@ -2,6 +2,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import { getDate } from "../../commons/libraries/utils";
 import OldBoardSearch from "../../oldBoardSearch/OldBoardSearch.container";
 import * as S from "./OldBoardList.styles";
+import { v4 as uuidv4 } from "uuid";
 
 interface IOldBoardListUI {
   register?: any;
@@ -50,6 +51,7 @@ export default function OldBoardListUI(props: IOldBoardListUI) {
 
       <S.InfiniteScroll>
         <InfiniteScroll
+          key={uuidv4()}
           pageStart={0}
           loadMore={props.loadFunc}
           hasMore={true}
@@ -57,6 +59,10 @@ export default function OldBoardListUI(props: IOldBoardListUI) {
         >
           {props.data?.fetchUseditems.map((el) => (
             <S.ListWrapper key={el._id}>
+              {/* // <div>
+              // <img src={props.data?.fetchUseditems.images} />
+              // {el.images[0]}
+              // </div> */}
               <S.ListNumber>
                 {String(el._id).slice(-4).toUpperCase()}
               </S.ListNumber>

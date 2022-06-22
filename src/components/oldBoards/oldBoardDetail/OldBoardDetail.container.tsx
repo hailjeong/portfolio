@@ -1,7 +1,11 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import OldBoardDetailUI from "./OldBoardDetail.presenter";
-import { DELETE_USEDITEM, FETCH_USEDITEM } from "./OldBoardDetail.queries";
+import {
+  DELETE_USEDITEM,
+  FETCH_USEDITEM,
+  TOGGLE_USED_ITEM,
+} from "./OldBoardDetail.queries";
 
 export default function OldBoardDetail() {
   const router = useRouter();
@@ -11,6 +15,21 @@ export default function OldBoardDetail() {
   });
 
   const [deleteUseditem] = useMutation(DELETE_USEDITEM);
+  const [toggleUseditemPick] = useMutation(TOGGLE_USED_ITEM);
+
+  const onClickPick = async () => {
+    await toggleUseditemPick({
+      variables: {
+        useditemId: router.query.id,
+      },
+      refetchQueries: [
+        {
+          query: FETCH_USEDITEM,
+          variables: { useditemId: router.query.id },
+        },
+      ],
+    });
+  };
 
   const onClickMoveList = () => {
     router.push(`/oldboards`);
@@ -45,6 +64,7 @@ export default function OldBoardDetail() {
       onClickMoveList={onClickMoveList}
       onClickEdit={onClickEdit}
       onClickDelete={onClickDelete}
+      onClickPick={onClickPick}
     />
   );
 }

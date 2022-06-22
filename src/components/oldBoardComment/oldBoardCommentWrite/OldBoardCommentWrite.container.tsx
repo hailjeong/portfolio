@@ -31,9 +31,8 @@ export default function OldBoardCommentWrite() {
         },
       ],
     });
-    setContents("");
   };
-  console.log(contents);
+
   return (
     <OldBoardCommentWriteUI
       onChangeContents={onChangeContents}

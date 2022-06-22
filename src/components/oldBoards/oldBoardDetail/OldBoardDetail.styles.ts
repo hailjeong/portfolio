@@ -1,13 +1,17 @@
+import { HeartTwoTone } from "@ant-design/icons";
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
   width: 1000px;
   padding: 100px;
 `;
-export const HeaderWrapper = styled.div``;
+export const HeaderWrapper = styled.div`
+  display: flex;
+`;
 export const ProfileWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid #999999;
   padding-bottom: 30px;
 `;
@@ -109,4 +113,17 @@ export const DeleteButton = styled.button`
     transition-duration: 2s;
   }
   cursor: pointer;
+`;
+export const Icons = styled.div`
+  padding-right: 100px;
+  display: flex;
+  align-items: center;
+`;
+export const HeartTwoToneIcon = styled(HeartTwoTone)`
+  font-size: 30px;
+  cursor: pointer;
+  padding-right: 20px;
+`;
+export const PickCount = styled.div`
+  font-size: 20px;
 `;

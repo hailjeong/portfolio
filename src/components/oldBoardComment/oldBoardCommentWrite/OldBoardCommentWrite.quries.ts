@@ -16,9 +16,7 @@ export const CREATE_USEDITEM_QUESTION = gql`
       }
       user {
         _id
-        email
         name
-        picture
       }
       createdAt
     }
