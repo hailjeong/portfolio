@@ -1,6 +1,11 @@
+import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import ChargeUI from "./Charge.presenter";
+import {
+  CREATE_POINT_TRANSACTION_OF_LOADING,
+  LOGED_IN,
+} from "./Charge.queries";
 
 declare const window: typeof globalThis & {
   IMP: any;
@@ -12,6 +17,12 @@ export default function Charge() {
 
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+
+  const [createPointTransactionOfLoading] = useMutation(
+    CREATE_POINT_TRANSACTION_OF_LOADING
+  );
+
+  const { data } = useQuery(LOGED_IN);
 
   const onChangePrice = (event) => {
     setValue(event.target.value);
@@ -55,13 +66,22 @@ export default function Charge() {
       (rsp: any) => {
         // callback
         if (rsp.success) {
-          console.log(rsp);
           // ...,
           // 결제 성공 시 로직,
           // ...
 
           // 백엔드에 결제관련 데이터 넘겨주기 (=> 즉, 뮤테이션 실행하기)
           // ex) createPointTransactionOfLoading
+          createPointTransactionOfLoading({
+            variables: {
+              impUid: rsp?.imp_uid,
+            },
+            refetchQueries: [
+              {
+                query: LOGED_IN,
+              },
+            ],
+          });
           router.push(`/oldboards`);
         } else {
           // ...,

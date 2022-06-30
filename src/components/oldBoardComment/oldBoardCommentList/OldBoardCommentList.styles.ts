@@ -1,4 +1,9 @@
-import { DeleteFilled, EditFilled, UserOutlined } from "@ant-design/icons";
+import {
+  DeleteFilled,
+  EditFilled,
+  MessageTwoTone,
+  UserOutlined,
+} from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { Avatar, Rate } from "antd";
 
@@ -37,6 +42,10 @@ export const Contents = styled.div`
 `;
 export const Icons = styled.div`
   display: flex;
+`;
+export const MessageTwoToneIcon = styled(MessageTwoTone)`
+  font-size: 20px;
+  cursor: pointer;
 `;
 export const EditFilledIcon = styled(EditFilled)`
   font-size: 20px;

@@ -31,12 +31,6 @@ export const FETCH_USEDITEM_QUESTION_ANSWERS = gql`
           name
         }
       }
-      useditem {
-        _id
-        name
-        remarks
-        contents
-      }
       createdAt
     }
   }
@@ -61,6 +55,29 @@ export const UPDATE_USEDITEM_QUESTION = gql`
       contents
 
       createdAt
+    }
+  }
+`;
+export const CREATE_USEDITEM_QUESTION_ANSWER = gql`
+  mutation createUseditemQuestionAnswer(
+    $createUseditemQuestionAnswerInput: CreateUseditemQuestionAnswerInput!
+    $useditemQuestionId: ID!
+  ) {
+    createUseditemQuestionAnswer(
+      createUseditemQuestionAnswerInput: $createUseditemQuestionAnswerInput
+      useditemQuestionId: $useditemQuestionId
+    ) {
+      _id
+      contents
+      createdAt
+      useditemQuestion {
+        _id
+        contents
+      }
+      user {
+        _id
+        name
+      }
     }
   }
 `;

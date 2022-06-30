@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { MouseEvent, useState, useRef } from "react";
 import OldBoardCommentListUI from "./OldBoardCommentList.presenter";
 import {
+  CREATE_USEDITEM_QUESTION_ANSWER,
   DELETE_USEDITEM_QUESTION,
   FETCH_USEDITEM_QUESTIONS,
   UPDATE_USEDITEM_QUESTION,
@@ -40,6 +41,9 @@ export default function OldBoardCommentList() {
   };
   const [deleteUseditemQuestion] = useMutation(DELETE_USEDITEM_QUESTION);
   const [updateUseditemQuestion] = useMutation(UPDATE_USEDITEM_QUESTION);
+  const [createUseditemQuestionAnswer] = useMutation(
+    CREATE_USEDITEM_QUESTION_ANSWER
+  );
 
   const onClickDelete = async (event) => {
     await deleteUseditemQuestion({
@@ -84,6 +88,18 @@ export default function OldBoardCommentList() {
     });
     setIsOpen("");
   };
+
+  const onClickWriteAnswer = async (e) => {
+    await createUseditemQuestionAnswer({
+      variables: {
+        useditemQuestionId: e.currentTarget.id,
+        createUseditemQuestionAnswerInput: {
+          contents: contents.current,
+        },
+      },
+    });
+  };
+
   return (
     <OldBoardCommentListUI
       onChangeContents={onChangeContents}
@@ -94,6 +110,7 @@ export default function OldBoardCommentList() {
       data={data}
       isOpen={isOpen}
       loadFunc={loadFunc}
+      onClickWriteAnswer={onClickWriteAnswer}
     />
   );
 }

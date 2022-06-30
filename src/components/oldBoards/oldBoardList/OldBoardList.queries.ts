@@ -7,6 +7,8 @@ export const FETCH_USEDITEMS = gql`
       name
       contents
       images
+      price
+      pickedCount
       seller {
         name
       }

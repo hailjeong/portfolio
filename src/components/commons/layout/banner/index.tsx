@@ -5,12 +5,12 @@ import Slider from "react-slick";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 400px;
+  height: 300px;
   background-color: ivory;
 `;
 const Img = styled.img`
   width: 300px;
-  height: 300px;
+  height: 250px;
 `;
 
 export default function BannerPage() {

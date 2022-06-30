@@ -13,6 +13,10 @@ interface IOldBoardWrite {
   itemdata?: any;
 }
 
+declare const window: typeof globalThis & {
+  kakao: any;
+};
+
 const schema = yup.object({
   name: yup.string().required("필수 입력 사항입니다."),
   remarks: yup.string().required("필수 입력 사항입니다."),
@@ -23,10 +27,11 @@ const schema = yup.object({
 export default function OldBoardWrite(props: IOldBoardWrite) {
   const router = useRouter();
 
-  const [address, setAddress] = useState("");
   const [imgUrls, setImgUrls] = useState(["", "", ""]);
   const [createUseditem] = useMutation(CREATE_USEDITEM);
   const [updateUseditem] = useMutation(UPDATE_USEDITEM);
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
 
   const { register, handleSubmit, formState, setValue, trigger } = useForm({
     resolver: yupResolver(schema),
@@ -45,24 +50,84 @@ export default function OldBoardWrite(props: IOldBoardWrite) {
 
     // onChange 됐다고 react-hook-form에 알려주는 기능!
     trigger("contents");
-    console.log(address);
   };
 
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src =
+      "//dapi.kakao.com/v2/maps/sdk.js?appkey=60f41832d3a252ba8f706fab1b304c1d&autoload=false&libraries=services,clusterer,drawing";
+    document.head.appendChild(script);
+
+    script.onload = () => {
+      window.kakao.maps.load(function () {
+        const container = document.getElementById("map"); // 지도를 담을 영역의 DOM 레퍼런스
+        const options = {
+          // 지도를 생성할 때 필요한 기본 옵션
+          center: new window.kakao.maps.LatLng(37.504449, 127.04886), // 지도의 중심좌표.
+          level: 3, // 지도의 레벨(확대, 축소 정도)
+        };
+
+        const map = new window.kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
+
+        const geocoder = new window.kakao.maps.services.Geocoder();
+        const marker = new window.kakao.maps.Marker(); // 클릭한 위치를 표시할 마커입니다
+        const infowindow = new window.kakao.maps.InfoWindow({ zindex: 1 }); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+
+        window.kakao.maps.event.addListener(
+          map,
+          "click",
+          function (mouseEvent) {
+            searchDetailAddrFromCoords(
+              mouseEvent.latLng,
+              function (result, status) {
+                if (status === window.kakao.maps.services.Status.OK) {
+                  const detailAddr = !result[0].road_address
+                    ? "<div>지번 주소 : " +
+                      result[0].address.address_name +
+                      "</div>"
+                    : "";
+
+                  const content =
+                    '<div class="bAddr">' +
+                    '<span class="title">누르신 위치입니다.</span>' +
+                    detailAddr +
+                    "</div>";
+
+                  // 마커를 클릭한 위치에 표시합니다
+                  marker.setPosition(mouseEvent.latLng);
+                  marker.setMap(map);
+
+                  // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+                  infowindow.setContent(content);
+                  infowindow.open(map, marker);
+                }
+              }
+            );
+          }
+        );
+        function searchDetailAddrFromCoords(coords, callback) {
+          // 좌표로 법정동 상세 주소 정보를 요청합니다
+          geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+          console.log("coords", coords);
+          setLat(coords.Ma);
+          setLng(coords.La);
+        }
+      });
+    };
+  }, [lat, lng]);
+
   const onClickSubmit = async (data) => {
+    console.log(data);
     try {
       const result = await createUseditem({
         variables: {
           createUseditemInput: {
-            name: data.name,
-            remarks: data.remarks,
-            contents: data.contents,
-            price: data.price,
-            tags: data.tags,
+            ...data,
             images: imgUrls,
             useditemAddress: {
-              address,
+              lat,
+              lng,
             },
-            createdAt: data.createdAt,
           },
         },
       });
@@ -72,6 +137,15 @@ export default function OldBoardWrite(props: IOldBoardWrite) {
       alert("죄송합니다. 다시 한 번 시도해주세요!");
     }
   };
+
+  useEffect(() => {
+    setLat(props.itemdata?.fetchUseditem.useditemAddress.lat || 0);
+  }, [props.itemdata?.fetchUseditem.useditemAddress.lat]);
+
+  useEffect(() => {
+    setLng(props.itemdata?.fetchUseditem.useditemAddress.lng || 0);
+  }, [props.itemdata?.fetchUseditem.useditemAddress.lng]);
+
   const onClickEdit = async (data) => {
     // try {
     const currentFiles = JSON.stringify(imgUrls);
@@ -87,6 +161,10 @@ export default function OldBoardWrite(props: IOldBoardWrite) {
         updateUseditemInput: {
           ...data,
           images: imgUrls,
+          useditemAddress: {
+            lat,
+            lng,
+          },
         },
       },
     });
@@ -115,8 +193,8 @@ export default function OldBoardWrite(props: IOldBoardWrite) {
       onClickEdit={onClickEdit}
       onChangeImgUrls={onChangeImgUrls}
       imgUrls={imgUrls}
-      setAddress={setAddress}
-      address={address}
+      lat={lat}
+      lng={lng}
     />
   );
 }

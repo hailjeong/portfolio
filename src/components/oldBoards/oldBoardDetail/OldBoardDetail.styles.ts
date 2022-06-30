@@ -3,7 +3,9 @@ import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
   width: 1000px;
-  padding: 100px;
+  padding-left: 200px;
+  padding-top: 100px;
+  padding-right: 200px;
 `;
 export const HeaderWrapper = styled.div`
   display: flex;
@@ -58,9 +60,8 @@ export const MapWrapper = styled.div`
   padding-bottom: 30px;
 `;
 export const Map = styled.div`
-  width: 200px;
-  height: 200px;
-  background-color: gray;
+  width: 400px;
+  height: 300px;
 `;
 export const Options = styled.div`
   padding-top: 50px;

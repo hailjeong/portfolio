@@ -29,6 +29,7 @@ export default function Header() {
     try {
       await logoutUser();
       setAccessToken("");
+      localStorage.removeItem("accessToken");
       router.push(`/oldboards`);
     } catch (error) {
       console.log(error.message);

@@ -13,6 +13,7 @@ interface IOldBoardCommentListUI {
   data?: any;
   isOpen: string;
   loadFunc: () => void;
+  onClickWriteAnswer: (e) => void;
 }
 
 export default function OldBoardCommentListUI(props: IOldBoardCommentListUI) {
@@ -57,6 +58,10 @@ export default function OldBoardCommentListUI(props: IOldBoardCommentListUI) {
                 )}
               </S.BodyWrapper>
               <S.Icons>
+                <S.MessageTwoToneIcon
+                  id={el._id}
+                  onClick={props.onClickWriteAnswer}
+                />
                 <S.EditFilledIcon
                   id={el._id}
                   onClick={props.onClickFinalEdit}

@@ -1,84 +1,66 @@
+import { MouseEvent } from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import { getDate } from "../../commons/libraries/utils";
-import OldBoardSearch from "../../oldBoardSearch/OldBoardSearch.container";
+// import OldBoardSearch from "../../oldBoardSearch/OldBoardSearch.container";
 import * as S from "./OldBoardList.styles";
-import { v4 as uuidv4 } from "uuid";
 
 interface IOldBoardListUI {
-  register?: any;
-  handleSubmit: any;
   data?: any;
-  refetch: any;
-  onClickMoveDetail: (event) => void;
-  onClickWriteNew: () => void;
-  onChangeWord: (value) => void;
-  keyword: string;
-  dataCount?: number;
-  refetchCount?: any;
+  onClickImage: (el) => (event: MouseEvent<HTMLImageElement>) => void;
+  onClickMakeNew: (event: MouseEvent<HTMLButtonElement>) => void;
+  // onChangeWord: (value) => void;
+  // keyword: string;
   loadFunc: () => void;
 }
 
 export default function OldBoardListUI(props: IOldBoardListUI) {
   return (
-    <S.Wrapper onSubmit={props.handleSubmit(props.onClickWriteNew)}>
-      <S.TitleName>
-        <S.Title>베스트 게시글</S.Title>
-      </S.TitleName>
-
-      <S.BoxWrapper>
-        <S.Box>Box</S.Box>
-      </S.BoxWrapper>
-
-      <S.SearchWrapper>
-        <S.SellingWrapper>
-          <S.Selling>판매중인 상품 / </S.Selling>
-          <S.Selled> 판매완료된 상품</S.Selled>
-        </S.SellingWrapper>
-        <S.SearchDate>
-          <OldBoardSearch
-            refetch={props.refetch}
-            onChangeWord={props.onChangeWord}
-          />
-        </S.SearchDate>
-      </S.SearchWrapper>
-
-      <S.ListTitleWrapper>
-        <S.ListTitleNumber>번호</S.ListTitleNumber>
-        <S.ListTitleTitle>제목</S.ListTitleTitle>
-        <S.ListTitleWriter>작성자</S.ListTitleWriter>
-        <S.ListTitleDate>날짜</S.ListTitleDate>
-      </S.ListTitleWrapper>
-
-      <S.InfiniteScroll>
-        <InfiniteScroll
-          key={uuidv4()}
-          pageStart={0}
-          loadMore={props.loadFunc}
-          hasMore={true}
-          useWindow={false}
-        >
+    <S.Wrapper>
+      <S.Buttons>
+        <S.Button onClick={props.onClickMakeNew}>상품 등록하기</S.Button>
+      </S.Buttons>
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={props.loadFunc}
+        hasMore={true}
+        useWindow={false}
+      >
+        <S.InfiniteScroll>
           {props.data?.fetchUseditems.map((el) => (
-            <S.ListWrapper key={el._id}>
-              {/* // <div>
-              // <img src={props.data?.fetchUseditems.images} />
-              // {el.images[0]}
-              // </div> */}
-              <S.ListNumber>
-                {String(el._id).slice(-4).toUpperCase()}
-              </S.ListNumber>
-              <S.ListTitle onClick={props.onClickMoveDetail} id={el._id}>
-                {el.name}
-              </S.ListTitle>
-              <S.ListWriter>{el.seller.name}</S.ListWriter>
-              <S.ListDate>{getDate(el.createdAt)}</S.ListDate>
-            </S.ListWrapper>
+            <S.ListCardWrapper
+              key={el._id}
+              id={el._id}
+              onClick={props.onClickImage(el)}
+            >
+              <S.Detail>
+                {el.images?.[0] ? (
+                  <S.Image
+                    src={`https://storage.googleapis.com/${el.images[0]}`}
+                  />
+                ) : (
+                  <S.Image src="/images/ListDelete.png" />
+                )}
+                <S.ItemWrapper>
+                  <S.ItemDetail>
+                    <S.ItemName>{el.name}</S.ItemName>
+                    <S.ItemRemarks>{el.remarks}</S.ItemRemarks>
+                    <S.ItemTags>{el.tags}</S.ItemTags>
+                  </S.ItemDetail>
+                  <S.SellerWrapper>
+                    <S.SellerIcon src="/images/Vector.png" />
+                    <S.Seller>{el.seller.name}</S.Seller>
+                    <S.PickImg src="/images/pick.png" />
+                    <S.PickCount>{el.pickedCount}</S.PickCount>
+                  </S.SellerWrapper>
+                </S.ItemWrapper>
+                <S.PriceWrapper>
+                  <S.ItmePriceImg src="/images/Price.png" />
+                  <S.ItemPrice>{el.price}원</S.ItemPrice>
+                </S.PriceWrapper>
+              </S.Detail>
+            </S.ListCardWrapper>
           ))}
-        </InfiniteScroll>
-      </S.InfiniteScroll>
-
-      <S.WrapperFooter>
-        <S.SubmitButton>게시물 등록하기</S.SubmitButton>
-      </S.WrapperFooter>
+        </S.InfiniteScroll>
+      </InfiniteScroll>
     </S.Wrapper>
   );
 }

@@ -1,5 +1,4 @@
 import { getDate } from "../../commons/libraries/utils";
-import MapPage from "../../map/Map.presenter";
 import * as S from "./OldBoardDetail.styles";
 import Dompurify from "dompurify";
 
@@ -9,6 +8,9 @@ interface IOldBoardDetailUI {
   onClickEdit: () => void;
   onClickDelete: () => void;
   onClickPick: () => void;
+  // lat: number;
+  // lng: number;
+  onClickBuy: () => void;
 }
 
 export default function OldBoardDetailUI(props: IOldBoardDetailUI) {
@@ -60,14 +62,14 @@ export default function OldBoardDetailUI(props: IOldBoardDetailUI) {
         </S.TagWrapper>
 
         <S.MapWrapper>
-          <MapPage data={props.data} />
+          <S.Map id="maptwo" />
         </S.MapWrapper>
       </S.Body>
 
       <S.Options>
         <S.ListButton onClick={props.onClickMoveList}>목록으로</S.ListButton>
         <S.EditButton onClick={props.onClickEdit}>수정하기</S.EditButton>
-        <S.BuyButton>구매하기</S.BuyButton>
+        <S.BuyButton onClick={props.onClickBuy}>구매하기</S.BuyButton>
         <S.DeleteButton onClick={props.onClickDelete}>삭제하기</S.DeleteButton>
       </S.Options>
     </S.Wrapper>

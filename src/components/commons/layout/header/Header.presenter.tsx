@@ -20,7 +20,12 @@ export default function HeaderUI(props: IHeaderUIProps) {
           <S.Buttons>
             <S.ProfileIcon src="/images/Vector.png" />
             <S.LoginUser>
-              {props.data?.fetchUserLoggedIn.name}님 안녕하세요^^
+              <S.UserName>
+                {props.data?.fetchUserLoggedIn.name}님 안녕하세요^^
+              </S.UserName>
+              <S.Point>
+                포인트: {props.data?.fetchUserLoggedIn.userPoint.amount}P
+              </S.Point>
             </S.LoginUser>
             <S.LogoutWrapper>
               <Charge />

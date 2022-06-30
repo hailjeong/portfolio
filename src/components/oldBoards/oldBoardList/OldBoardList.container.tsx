@@ -1,28 +1,23 @@
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { MouseEvent } from "react";
 import OldBoardListUI from "./OldBoardList.presenter";
 import { FETCH_USEDITEMS } from "./OldBoardList.queries";
 
 export default function OldBoardList() {
   const router = useRouter();
-  const [keyword, setKeyWord] = useState("");
 
-  const { register, handleSubmit } = useForm({
-    mode: "onChange",
-  });
+  const { data, fetchMore } = useQuery(FETCH_USEDITEMS);
 
-  const { data, refetch, fetchMore } = useQuery(FETCH_USEDITEMS, {
-    variables: { useditemId: router.query.id },
-  });
   const loadFunc = () => {
     if (!data) return;
     fetchMore({
       variables: { page: Math.ceil(data?.fetchUseditems.length / 10) + 1 },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult.fetchUseditems)
-          return { fetchUseditems: [...prev.fetchUseditems] };
+          return {
+            fetchUseditems: [...prev.fetchUseditems],
+          };
 
         return {
           fetchUseditems: [
@@ -34,29 +29,34 @@ export default function OldBoardList() {
     });
   };
 
-  const onClickMoveDetail = (event) => {
-    router.push(`/oldboards/boards/${event.currentTarget.id}`);
-  };
-
-  const onClickWriteNew = () => {
+  const onClickMakeNew = (event: MouseEvent<HTMLButtonElement>) => {
     router.push(`/oldboards/boards/new`);
   };
 
-  const onChangeWord = (value) => {
-    setKeyWord(value);
+  const onClickImage = (el) => (event: MouseEvent<HTMLDivElement>) => {
+    const baskets = JSON.parse(sessionStorage.getItem("basket") || "[]");
+    const temp = baskets.filter((basketEl) => basketEl._id === el._id);
+
+    if (baskets.length >= 3) {
+      baskets.pop();
+    }
+
+    if (temp.length > 0) {
+      router.push(`/oldboards/boards/${event.currentTarget.id}`);
+    } else {
+      const { __typename, ...newEl } = el;
+      baskets.unshift(newEl);
+      sessionStorage.setItem("basket", JSON.stringify(baskets));
+      router.push(`/oldboards`);
+    }
   };
 
   return (
     <OldBoardListUI
-      register={register}
-      handleSubmit={handleSubmit}
       data={data}
-      refetch={refetch}
-      onClickMoveDetail={onClickMoveDetail}
-      onClickWriteNew={onClickWriteNew}
-      onChangeWord={onChangeWord}
-      keyword={keyword}
       loadFunc={loadFunc}
+      onClickImage={onClickImage}
+      onClickMakeNew={onClickMakeNew}
     />
   );
 }

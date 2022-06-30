@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 300px;
+  height: 200px;
   background-image: url("/images/Header01.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -63,6 +63,16 @@ export const Logout = styled.button`
 `;
 export const LoginUser = styled.div`
   font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-right: 10px;
+  font-weight: bold;
+`;
+export const UserName = styled.div``;
+export const Point = styled.div`
+  font-weight: bold;
 `;
 export const ProfileIcon = styled.img`
   cursor: pointer;
